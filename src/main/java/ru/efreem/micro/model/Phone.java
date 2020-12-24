@@ -1,4 +1,4 @@
-package ru.efreem.micro.entities;
+package ru.efreem.micro.model;
 
 import javax.persistence.*;
 
@@ -13,7 +13,7 @@ public class Phone {
     @Column(name = "VALUE")
     private String value;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_EMAIL")
     private User user;
 }

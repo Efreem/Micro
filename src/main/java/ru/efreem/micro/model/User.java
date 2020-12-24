@@ -1,6 +1,7 @@
-package ru.efreem.micro.entities;
+package ru.efreem.micro.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
@@ -16,7 +17,7 @@ public class User {
     @Column(name = "EMAIL")
     private String email;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "USERS")
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "PHONE_EMAIL")
     private Set<Phone> phoneNumbers;
 

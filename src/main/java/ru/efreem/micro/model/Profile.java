@@ -1,6 +1,7 @@
-package ru.efreem.micro.entities;
+package ru.efreem.micro.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PROFILES")
@@ -14,9 +15,9 @@ public class Profile {
     @Column(name = "AGE")
     private byte age;
     @Column(name = "CASH")
-    private double cash;
+    private BigDecimal cash;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_EMAIL")
     private User user;
 
@@ -28,11 +29,11 @@ public class Profile {
         this.age = age;
     }
 
-    public double getCash() {
+    public BigDecimal getCash() {
         return cash;
     }
 
-    public void setCash(double cash) {
+    public void setCash(BigDecimal cash) {
         this.cash = cash;
     }
 

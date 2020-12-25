@@ -25,6 +25,14 @@ public class User {
     @JoinColumn(name = "PROFILE_EMAIL")
     private Profile profile;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

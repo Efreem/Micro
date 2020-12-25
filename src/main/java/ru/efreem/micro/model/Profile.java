@@ -13,7 +13,7 @@ public class Profile {
     private Long id;
 
     @Column(name = "AGE")
-    private byte age;
+    private Byte age;
     @Column(name = "CASH")
     private BigDecimal cash;
 
@@ -21,11 +21,11 @@ public class Profile {
     @JoinColumn(name = "USER_EMAIL")
     private User user;
 
-    public byte getAge() {
+    public Byte getAge() {
         return age;
     }
 
-    public void setAge(byte age) {
+    public void setAge(Byte age) {
         this.age = age;
     }
 

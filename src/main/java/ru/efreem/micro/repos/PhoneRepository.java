@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 @Repository
 public interface PhoneRepository extends CrudRepository<Phone, Long> {
     @Modifying
-    @Query(value = "UPDATE User u SET u.cash=?1 WHERE u.id=?2")
-    void updateUserCashById(BigDecimal cash, Long id);
+    @Query(value = "UPDATE Profile p SET p.cash=?1 WHERE p.id=?2")
+    void updateCashById(BigDecimal cash, Long id);
 }

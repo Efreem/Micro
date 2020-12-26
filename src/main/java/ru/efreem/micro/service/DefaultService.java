@@ -5,10 +5,10 @@ import ru.efreem.micro.model.User;
 import java.util.List;
 
 public interface DefaultService {
-    List<User> getUserByGreaterAge(Byte age);
-    List<User> getUserByUnderAge(Byte age);
-    List<User> getUserByAge(Byte age);
-    List<User> getUserByPhone(String phone);
-    List<User> getUserByName(String name);
-    List<User> getUserByEmail(String email);
+    List<User> findByGreaterAge(Byte age);
+    List<User> findByLessAge(Byte age);
+    List<User> findByAge(Byte age);
+    User findByPhone(String phone);
+    List<User> findByName(String name);
+    List<User> findByEmail(String email);
 }

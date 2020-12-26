@@ -23,7 +23,7 @@ public class AdminUserService implements AdminService, DefaultService {
     }
 
     public void updateProfileCashById(BigDecimal cash, Long id) {
-
+        profileRepository.up
     }
 
     public List<User> getUserByGreaterAge(Byte age) {

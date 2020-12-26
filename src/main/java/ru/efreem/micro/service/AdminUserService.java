@@ -30,8 +30,8 @@ public class AdminUserService implements AdminService, DefaultService {
         userRepository.findByAgeGreaterThan(age);
     }
 
-    public List<User> getUserByUnderAge(Byte age) {
-        return null;
+    public List<User> getUserByLessAge(Byte age) {
+        userRepository.findByAgeLessThan(age);
     }
 
     public List<User> getUserByAge(Byte age) {

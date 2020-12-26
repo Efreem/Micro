@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByAgeGreaterThan(Byte age);
     List<User> findByAgeLessThan(Byte age);
+    List<User> findByAge(Byte age);
 }

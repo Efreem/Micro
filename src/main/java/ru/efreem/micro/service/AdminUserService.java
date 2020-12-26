@@ -23,19 +23,19 @@ public class AdminUserService implements AdminService, DefaultService {
     }
 
     public void updateProfileCashById(BigDecimal cash, Long id) {
-        profileRepository.updateCashById(cash, id);
+        return profileRepository.updateCashById(cash, id);
     }
 
-    public List<User> getUserByGreaterAge(Byte age) {
-        userRepository.findByAgeGreaterThan(age);
+    public List<User> findByGreaterAge(Byte age) {
+        return userRepository.findByAgeGreaterThan(age);
     }
 
-    public List<User> getUserByLessAge(Byte age) {
-        userRepository.findByAgeLessThan(age);
+    public List<User> findByLessAge(Byte age) {
+        return userRepository.findByAgeLessThan(age);
     }
 
-    public List<User> getUserByAge(Byte age) {
-        return null;
+    public List<User> findByAge(Byte age) {
+        return userRepository.findByAge(age);
     }
 
     public List<User> getUserByPhone(String phone) {

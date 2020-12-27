@@ -19,6 +19,7 @@ public class AdminUserService implements AdminService, DefaultService {
     private ProfileRepository profileRepository;
     private PhoneRepository phoneRepository;
 
+    private static final String LOG_PATTERN = "EXECUTED METHOD: ";
     @Autowired
     public AdminUserService(UserRepository userRepository, ProfileRepository profileRepository,
                             PhoneRepository phoneRepository) {
@@ -29,6 +30,7 @@ public class AdminUserService implements AdminService, DefaultService {
 
     public void updateProfileCashById(BigDecimal cash, Long id) {
         profileRepository.updateCashById(cash, id);
+        System.out.println(LOG_PATTERN + "updateCashById");
     }
 
     public List<User> findByGreaterAge(Byte age) {
@@ -38,6 +40,8 @@ public class AdminUserService implements AdminService, DefaultService {
         for (Profile profile : profiles) {
             users.add(profile.getUser());
         }
+
+        System.out.println(LOG_PATTERN + "findByGreaterAge");
 
         return users;
     }
@@ -50,6 +54,8 @@ public class AdminUserService implements AdminService, DefaultService {
             users.add(profile.getUser());
         }
 
+        System.out.println(LOG_PATTERN + "findByLessAge");
+
         return users;
     }
 
@@ -61,19 +67,37 @@ public class AdminUserService implements AdminService, DefaultService {
             users.add(profile.getUser());
         }
 
+        System.out.println(LOG_PATTERN + "findByAge");
+
         return users;
     }
 
     public User findByPhone(String phone) {
-        return null;
+        List<Phone> phones = phoneRepository.findByValue(phone);
+
+        System.out.println(LOG_PATTERN + "findByPhone");
+
+        for (Phone phoneObj : phones) {
+
+            if (phoneObj.getValue().equals(phone)) {
+                return phoneObj.getUser();
+            }
+
+        }
+
+        return new User();
     }
 
     public List<User> findByName(String name) {
-        return null;
+        System.out.println(LOG_PATTERN + "findByName");
+
+        return userRepository.findByName(name);
     }
 
     public List<User> findByEmail(String email) {
-        return null;
+        System.out.println(LOG_PATTERN + "findByEmail");
+
+        return userRepository.findByEmail(email);
     }
 
     public boolean existsByPhone(String phoneValue) {

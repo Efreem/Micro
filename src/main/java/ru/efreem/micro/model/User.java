@@ -14,16 +14,15 @@ public class User {
 
     @Column(name = "NAME")
     private String name;
-    @Id
     @Column(name = "EMAIL")
     private String email;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EMAIL")
+    @JoinColumn(name = "ID")
     private Set<Phone> phoneNumbers;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "EMAIL", insertable = false, updatable = false)
+    @JoinColumn(name = "ID")
     private Profile profile;
 
     public Long getId() {
@@ -43,11 +42,11 @@ public class User {
     }
 
     public String getEmail() {
-        return email1;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.email = email
+        this.email = email;
     }
 
     public Set<Phone> getPhoneNumbers() {

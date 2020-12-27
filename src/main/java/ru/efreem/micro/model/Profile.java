@@ -16,11 +16,9 @@ public class Profile {
     private Byte age;
     @Column(name = "CASH")
     private BigDecimal cash;
-    @Column(name = "USER_EMAIL")
-    private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_EMAIL", insertable = false, updatable = false)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Byte getAge() {

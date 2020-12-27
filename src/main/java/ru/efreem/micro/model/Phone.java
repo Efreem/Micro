@@ -12,11 +12,9 @@ public class Phone {
 
     @Column(name = "VALUE")
     private String value;
-    @Column(name = "USER_EMAIL")
-    private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_EMAIL", insertable = false, updatable = false)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Long getId() {

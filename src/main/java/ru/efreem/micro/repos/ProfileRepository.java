@@ -15,6 +15,9 @@ public interface ProfileRepository extends CrudRepository<Profile, Long> {
     @Modifying
     @Query(value = "UPDATE Profile p SET p.cash=?1 WHERE p.id=?2")
     void updateCashById(BigDecimal cash, Long id);
+    @Modifying
+    @Query(value = "UPDATE Profile p SET p.age=?1 WHERE p.id=?2")
+    void updateAgeById(Byte age, Long id);
 
     List<Profile> findByAgeGreaterThan(Byte age);
     List<Profile> findByAgeLessThan(Byte age);

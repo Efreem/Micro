@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PROFILES")
-@Cacheable
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,11 +36,11 @@ public class Profile {
         this.id = id;
     }
 
-    public BigDecimal getCash() {
+    public synchronized BigDecimal getCash() {
         return cash;
     }
 
-    public void setCash(BigDecimal cash) {
+    public synchronized void setCash(BigDecimal cash) {
         this.cash = cash;
     }
 
@@ -51,5 +50,23 @@ public class Profile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean equalsById(Profile profile) {
+        return this.id.equals(profile.getId());
+    }
+
+    /*
+    Данный алгоритм хэширования заключается в том, что идентифиакатор и возраст переводятся в строку,
+    после чего из их объединения вычисляется хэш. Данный алгоритм является предварительным. В будущем
+    планируется его замена на более эффективный
+     */
+    @Override
+    public int hashCode() {
+        String idStringValue = id.toString();
+        String ageStringValue = age.toString();
+        String concat = idStringValue + ageStringValue;
+
+        return concat.hashCode();
     }
 }

@@ -18,11 +18,11 @@ public class User {
     private String email;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID")
-    private Set<Phone> phoneNumbers;
+    @JoinColumn(name = "PHONE_ID")
+    private Set<Phone> phones;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "PROFILE_ID")
     private Profile profile;
 
     public Long getId() {
@@ -50,11 +50,11 @@ public class User {
     }
 
     public Set<Phone> getPhoneNumbers() {
-        return phoneNumbers;
+        return phones;
     }
 
-    public void setPhoneNumbers(Set<Phone> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+    public void setPhoneNumbers(Set<Phone> phones) {
+        this.phones = phones;
     }
 
     public Profile getProfile() {

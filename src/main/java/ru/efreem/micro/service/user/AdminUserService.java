@@ -1,4 +1,4 @@
-package ru.efreem.micro.service;
+package ru.efreem.micro.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import ru.efreem.micro.repos.UserRepository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminUserService implements AdminService, DefaultService {
@@ -20,19 +21,28 @@ public class AdminUserService implements AdminService, DefaultService {
     private PhoneRepository phoneRepository;
 
     private static final String LOG_PATTERN = "EXECUTED METHOD: ";
+
     @Autowired
-    public AdminUserService(UserRepository userRepository, ProfileRepository profileRepository,
+    public AdminUserService(UserRepository userRepository,
+                            ProfileRepository profileRepository,
                             PhoneRepository phoneRepository) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.phoneRepository = phoneRepository;
     }
 
+    @Override
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
     public void updateProfileCashById(BigDecimal cash, Long id) {
         profileRepository.updateCashById(cash, id);
         System.out.println(LOG_PATTERN + "updateCashById");
     }
 
+    @Override
     public List<User> findByGreaterAge(Byte age) {
         List<User> users = new ArrayList<>();
         List<Profile> profiles = profileRepository.findByAgeGreaterThan(age);
@@ -46,6 +56,7 @@ public class AdminUserService implements AdminService, DefaultService {
         return users;
     }
 
+    @Override
     public List<User> findByLessAge(Byte age) {
         List<User> users = new ArrayList<>();
         List<Profile> profiles = profileRepository.findByAgeLessThan(age);
@@ -59,6 +70,7 @@ public class AdminUserService implements AdminService, DefaultService {
         return users;
     }
 
+    @Override
     public List<User> findByAge(Byte age) {
         List<User> users = new ArrayList<>();
         List<Profile> profiles = profileRepository.findByAge(age);
@@ -72,6 +84,7 @@ public class AdminUserService implements AdminService, DefaultService {
         return users;
     }
 
+    @Override
     public User findByPhone(String phone) {
         List<Phone> phones = phoneRepository.findByValue(phone);
 
@@ -88,12 +101,14 @@ public class AdminUserService implements AdminService, DefaultService {
         return new User();
     }
 
+    @Override
     public List<User> findByName(String name) {
         System.out.println(LOG_PATTERN + "findByName");
 
         return userRepository.findByName(name);
     }
 
+    @Override
     public List<User> findByEmail(String email) {
         System.out.println(LOG_PATTERN + "findByEmail");
 
@@ -104,5 +119,47 @@ public class AdminUserService implements AdminService, DefaultService {
         List<Phone> phones = phoneRepository.findByValue(phoneValue);
 
         return phones.size() == 1;
+    }
+
+    public boolean isCorrectPhoneValue(String value) {
+        return value.matches("\\+?[78][0-9]{10}");
+    }
+
+    public boolean isCorrectEmail(String email) {
+            return email.matches("[a-zA-Z0-9]*@[a-zA-Z0-9]*\\.[a-z]*");
+    }
+
+    @Override
+    public void updateProfileAgeById(Profile profile, Byte age) {
+        profileRepository.updateAgeById(age, profile.getId());
+
+        System.out.println(LOG_PATTERN + "updateProfileAgeById");
+    }
+
+    @Override
+    public void updatePhoneValueById(Phone phone, String value) {
+
+        if (isCorrectPhoneValue(value)) {
+            phoneRepository.updateValueById(value, phone.getId());
+        }
+
+        System.out.println(LOG_PATTERN + "updatePhoneValueById");
+    }
+
+    @Override
+    public void updateNameById(String name, Long id) {
+        userRepository.updateNameById(name, id);
+
+        System.out.println(LOG_PATTERN + "updateNameById");
+    }
+
+    @Override
+    public void updateEmailById(String email, Long id) {
+
+        if (isCorrectEmail(email)) {
+            userRepository.updateEmailById(email, id);
+        }
+
+        System.out.println(LOG_PATTERN + "updateEmailById");
     }
 }

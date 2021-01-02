@@ -52,11 +52,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<Phone> getPhoneNumbers() {
+    public Set<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhoneNumbers(Set<Phone> phones) {
+    public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
 

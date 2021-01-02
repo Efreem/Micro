@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.efreem.micro.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -18,5 +19,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     void updateEmailById(String email, Long id);
 
     List<User> findByName(String name);
-    List<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

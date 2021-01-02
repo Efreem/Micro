@@ -19,4 +19,13 @@ public class ExceptionDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public static ExceptionDto generateUserNotFoundException(String description) {
+        ExceptionDto exception = new ExceptionDto();
+
+        exception.setName("UserNotFoundException");
+        exception.setDescription(description);
+
+        return exception;
+    }
 }

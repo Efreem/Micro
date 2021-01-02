@@ -14,7 +14,7 @@ public class Phone {
     private String value;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL")
     private User user;
 
     public Long getId() {

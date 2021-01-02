@@ -1,5 +1,7 @@
 package ru.efreem.micro.model;
 
+import org.hibernate.SessionFactory;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -17,7 +19,7 @@ public class Profile {
     private BigDecimal cash;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_EMAIL", referencedColumnName = "EMAIL")
     private User user;
 
     public Byte getAge() {

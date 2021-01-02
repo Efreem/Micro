@@ -1,5 +1,7 @@
 package ru.efreem.micro.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,15 +16,16 @@ public class User {
 
     @Column(name = "NAME")
     private String name;
+    @NaturalId
     @Column(name = "EMAIL")
     private String email;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PHONE_ID")
+    @JoinColumn(name = "PHONE_EMAIL")
     private Set<Phone> phones;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PROFILE_ID")
+    @JoinColumn(name = "PROFILE_EMAIL")
     private Profile profile;
 
     public Long getId() {

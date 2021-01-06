@@ -7,13 +7,13 @@ import ru.efreem.micro.repos.ProfileRepository;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AdminProfileService implements AdminService, DefaultService {
+public class ProfileService implements AdminService, DefaultService {
     private ProfileRepository profileRepository;
 
     private final static String LOG_PATTERN = "EXECUTED METHOD: ";
 
     @Autowired
-    public AdminProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

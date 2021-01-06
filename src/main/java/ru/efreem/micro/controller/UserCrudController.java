@@ -1,13 +1,12 @@
 package ru.efreem.micro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.efreem.micro.dto.ExceptionDto;
 import ru.efreem.micro.model.User;
-import ru.efreem.micro.service.user.AdminUserService;
+import ru.efreem.micro.service.user.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,19 +14,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserCrudController {
-    private AdminUserService adminUserService;
+    private UserService userService;
 
     private final static String CONTROLLER_LOG = "UserCrudController: executed method ";
     private static final String CONTROLLER_EXCEPTION_LOG = "UserCrudController exception in mapping ";
 
     @Autowired
-    public UserCrudController(AdminUserService adminUserService) {
-        this.adminUserService = adminUserService;
+    public UserCrudController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/findById")
     public Object findById(Long id) {
-        Optional<User> user = adminUserService.findById(id);
+        Optional<User> user = userService.findById(id);
 
         System.out.println(CONTROLLER_LOG + "findById");
 
@@ -43,7 +42,7 @@ public class UserCrudController {
 
     @GetMapping("/findByName")
     public Object findByName(String name) {
-        List<User> users = adminUserService.findByName(name);
+        List<User> users = userService.findByName(name);
 
         System.out.println(CONTROLLER_LOG + "findByName");
 
@@ -63,7 +62,7 @@ public class UserCrudController {
 
         System.out.println(CONTROLLER_LOG + "findByEmail");
 
-        if (!adminUserService.isCorrectEmail(email)) {
+        if (!userService.isCorrectEmail(email)) {
             ExceptionDto exception = new ExceptionDto();
 
             exception.setName("IncorrectEmail");
@@ -74,7 +73,7 @@ public class UserCrudController {
             return exception;
         }
 
-        user = adminUserService.findByEmail(email);
+        user = userService.findByEmail(email);
 
         if (user.isEmpty()) {
             System.out.println(CONTROLLER_EXCEPTION_LOG + "findByEmail: UserNotFoundException");

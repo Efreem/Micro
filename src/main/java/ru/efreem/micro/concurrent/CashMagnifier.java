@@ -1,34 +1,38 @@
 package ru.efreem.micro.concurrent;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.efreem.micro.model.Profile;
-import ru.efreem.micro.repos.ProfileRepository;
-import ru.efreem.micro.service.profile.AdminProfileService;
+import ru.efreem.micro.service.profile.ProfileService;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CashMagnifier extends Thread {
-    private AdminProfileService adminProfileService;
+@Component
+public class CashMagnifier implements Runnable {
+    private ProfileService profileService;
     Map<Profile, Integer> cashPercentMapping;
 
     private static final String THREAD_LOG = "Cash magnifier: ";
     private static final BigDecimal MULTIPLE_NUM = new BigDecimal(0.1);
     private static final Integer MAXIMAL_PERCENT = 107;
 
-    @Autowired
-    public CashMagnifier(AdminProfileService adminProfileService) {
-        this.adminProfileService = adminProfileService;
+    public CashMagnifier() {
     }
 
     @Override
     public void run() {
         System.out.println("THREAD IS ON DUTY");
         List<Profile> profiles;
+        cashPercentMapping = new HashMap<>();
 
         while(true) {
-            profiles = adminProfileService.findAll();
+            profiles = profileService.findAll();
+
+            if (profiles == null) {
+                continue;
+            }
 
             System.out.println(THREAD_LOG + "IS RUNNING!");
 
@@ -77,12 +81,11 @@ public class CashMagnifier extends Thread {
     public void increaseCash(Profile profile) {
         profile.setCash(profile.getCash().add(profile.getCash().multiply(MULTIPLE_NUM)));
 
-        adminProfileService.updateCashById(profile.getCash(), profile.getId());
+        profileService.updateCashById(profile.getCash(), profile.getId());
     }
 
     //Обновить текущий процент, на который увеличен счёт профиля
     public void registerNewPercentValue(Profile profile) {
         cashPercentMapping.put(profile, cashPercentMapping.get(profile) + 10);
     }
-
 }

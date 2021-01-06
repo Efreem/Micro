@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AdminUserService implements AdminService, DefaultService {
+public class UserService implements AdminService, DefaultService {
     private UserRepository userRepository;
 
     private static final String LOG_PATTERN = "EXECUTED METHOD: ";
 
     @Autowired
-    public AdminUserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -1,4 +1,4 @@
-package ru.efreem.micro.model.auth;
+package ru.efreem.micro.auth;
 
 import java.util.List;
 
@@ -32,5 +32,13 @@ public class AuthUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

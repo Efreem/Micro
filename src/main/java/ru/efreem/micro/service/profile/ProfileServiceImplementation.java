@@ -1,19 +1,21 @@
 package ru.efreem.micro.service.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.efreem.micro.model.Profile;
 import ru.efreem.micro.repos.ProfileRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ProfileService implements AdminService, DefaultService {
+@Service
+public class ProfileServiceImplementation implements AdminProfileService, DefaultProfileService {
     private ProfileRepository profileRepository;
 
     private final static String LOG_PATTERN = "EXECUTED METHOD: ";
 
     @Autowired
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileServiceImplementation(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
 

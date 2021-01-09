@@ -1,7 +1,15 @@
-package ru.efreem.micro.model.auth;
+package ru.efreem.micro.auth;
 
 public class Role {
     private String name;
+
+    public Role() {
+
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
 
     public String getName() {
         return name;
@@ -18,6 +26,7 @@ public class Role {
 
         return result;
     }
+
     @Override
     public String toString() {
         return name;

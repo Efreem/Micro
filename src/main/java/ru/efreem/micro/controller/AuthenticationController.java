@@ -7,7 +7,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.efreem.micro.auth.AuthUser;
@@ -32,25 +33,25 @@ public class AuthenticationController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("login")
-    public ResponseEntity login(String username, String password) {
+    @GetMapping("login/{password}")
+    public ResponseEntity login(@PathVariable(name = "password") String password) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken("1234", password));
             AuthUser authUser = new AuthUser();
 
             authUser.setId(1L);
-            authUser.setUsername(username);
-            authUser.setPassword("1234");
+            authUser.setUsername("1234");
+            authUser.setPassword(password);
             authUser.setRoles(List.of(new Role("ADMIN")));
 
             if (authUser == null) {
-                throw new UsernameNotFoundException("User with username: " + username + " not found");
+                throw new UsernameNotFoundException("User with username: " + authUser.getUsername() + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username, authUser.getRoles());
+            String token = jwtTokenProvider.createToken("1234", authUser.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
-            response.put("username", username);
+            response.put("username", "1234");
             response.put("token", token);
 
             return ResponseEntity.ok(response);

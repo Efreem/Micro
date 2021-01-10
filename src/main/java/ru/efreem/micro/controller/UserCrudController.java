@@ -2,6 +2,7 @@ package ru.efreem.micro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.efreem.micro.dto.ActionDto;
@@ -31,12 +32,18 @@ public class UserCrudController {
     public UserCrudController(UserRepository userRepository,
                               AdminUserService adminUserService,
                               DefaultUserService defaultUserService) {
+        this.userRepository = userRepository;
         this.adminUserService = adminUserService;
         this.defaultUserService = defaultUserService;
     }
 
-    @GetMapping("/findById")
-    public Object findById(Long id) {
+    @GetMapping("findAll")
+    public Object findAll() {
+        return userRepository.findAll();
+    }
+
+    @GetMapping("/findById/{id}")
+    public Object findById(@PathVariable(name = "id") Long id) {
         Optional<User> user = defaultUserService.findById(id);
 
         System.out.println(CONTROLLER_LOG + "findById");

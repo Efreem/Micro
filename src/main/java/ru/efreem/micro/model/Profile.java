@@ -7,12 +7,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PROFILES")
-public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private Long id;
-
+public class Profile extends BaseEntity {
     @Column(name = "AGE")
     private Byte age;
     @Column(name = "CASH")
@@ -28,14 +23,6 @@ public class Profile {
 
     public void setAge(Byte age) {
         this.age = age;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public synchronized BigDecimal getCash() {

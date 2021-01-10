@@ -8,12 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "USERS")
 @Cacheable
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private Long id;
-
+public class User extends BaseEntity {
     @Column(name = "NAME")
     private String name;
     @NaturalId
@@ -27,14 +22,6 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROFILE_EMAIL")
     private Profile profile;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

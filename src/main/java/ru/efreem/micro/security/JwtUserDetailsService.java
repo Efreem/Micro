@@ -21,7 +21,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         user.setId(1L);
         user.setUsername(username);
         user.setPassword("1234");
-        user.setRoles(List.of(new Role("ADMIN")));
+        user.setRoles(List.of(new Role("ROLE_ADMIN")));
 
         JwtUser jwtUser = JwtUserFactory.create(user);
         System.out.println("Loaded user with username " + username);

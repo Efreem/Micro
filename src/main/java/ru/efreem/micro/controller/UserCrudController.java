@@ -1,14 +1,9 @@
 package ru.efreem.micro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.efreem.micro.dto.ActionDto;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import ru.efreem.micro.dto.ExceptionDto;
-import ru.efreem.micro.model.Phone;
-import ru.efreem.micro.model.Profile;
 import ru.efreem.micro.model.User;
 import ru.efreem.micro.repos.UserRepository;
 import ru.efreem.micro.service.user.AdminUserService;
@@ -20,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserCrudController {
     private UserRepository userRepository;
     private AdminUserService adminUserService;
@@ -37,12 +33,12 @@ public class UserCrudController {
         this.defaultUserService = defaultUserService;
     }
 
-    @GetMapping("findAll")
+    @PostMapping("findAll")
     public Object findAll() {
         return userRepository.findAll();
     }
 
-    @GetMapping("/findById/{id}")
+    @PostMapping("/findById/{id}")
     public Object findById(@PathVariable(name = "id") Long id) {
         Optional<User> user = defaultUserService.findById(id);
 
@@ -58,8 +54,8 @@ public class UserCrudController {
         return user.get();
     }
 
-    @GetMapping("/findByName")
-    public Object findByName(String name) {
+    @PostMapping("/findByName/{name}")
+    public Object findByName(@PathVariable(name = "name") String name) {
         List<User> users = defaultUserService.findByName(name);
 
         System.out.println(CONTROLLER_LOG + "findByName");
@@ -74,8 +70,8 @@ public class UserCrudController {
         return users;
     }
 
-    @GetMapping("/findByEmail")
-    public Object findByEmail(String email) {
+    @PostMapping("/findByEmail/{email}")
+    public Object findByEmail(@PathVariable(name = "email") String email) {
         Optional<User> user;
 
         System.out.println(CONTROLLER_LOG + "findByEmail");
@@ -103,8 +99,8 @@ public class UserCrudController {
         return user.get();
     }
 
-    @GetMapping("/findByAge")
-    public Object findByAge(Byte age) {
+    @PostMapping("/findByAge/{age}")
+    public Object findByAge(@PathVariable(name = "age") Byte age) {
         List<User> users = defaultUserService.findByAge(age);
 
         if (users == null) {
@@ -117,8 +113,8 @@ public class UserCrudController {
         return users;
     }
 
-    @GetMapping("/findByAgeLessThan")
-    public Object findByAgeLessThan(Byte age) {
+    @PostMapping("/findByAgeLessThan/{age}")
+    public Object findByAgeLessThan(@PathVariable(name = "age") Byte age) {
         List<User> users = defaultUserService.findByAgeLessThan(age);
 
         if (users == null) {
@@ -131,8 +127,8 @@ public class UserCrudController {
         return users;
     }
 
-    @GetMapping("/findByAgeGreaterThan")
-    public Object findByAgeGreaterThan(Byte age) {
+    @PostMapping("/findByAgeGreaterThan/{age}")
+    public Object findByAgeGreaterThan(@PathVariable(name = "age") Byte age) {
         List<User> users = defaultUserService.findByAgeGreaterThan(age);
 
         if (users == null) {
@@ -145,8 +141,8 @@ public class UserCrudController {
         return users;
     }
 
-    @GetMapping("/findByPhoneValue")
-    public Object findByPhoneValue(String phoneValue) {
+    @PostMapping("/findByPhoneValue/{phoneValue}")
+    public Object findByPhoneValue(@PathVariable(name = "phoneValue") String phoneValue) {
         List<User> users = defaultUserService.findByPhoneValue(phoneValue);
 
         if (users == null) {
@@ -162,6 +158,45 @@ public class UserCrudController {
     @GetMapping("/save")
     public Object saveUser(String name, String email, String phoneValue, BigDecimal cash, Byte age) {
         return adminUserService.saveUser(name, email, phoneValue, cash, age);
+    }
+
+    @PostMapping("/updateEmailById/{id}/{email}")
+    public Object updateEmailById(@PathVariable(name = "id") Long id,
+                                  @PathVariable(name = "email") String email) {
+
+        System.out.println(CONTROLLER_LOG + "updateEmailById");
+
+        if (!adminUserService.isCorrectEmail(email)) {
+            ExceptionDto exception = new ExceptionDto();
+
+            exception.setName("IncorrectEmail");
+            exception.setDescription("Sorry, but email " + email + " is not correct");
+
+            System.out.println(CONTROLLER_EXCEPTION_LOG + "updateEmailById: IncorrectEmail");
+
+            return exception;
+        }
+
+        if (adminUserService.isEmailExists(email)) {
+            ExceptionDto exception = new ExceptionDto();
+
+            exception.setName("EmailExists");
+            exception.setDescription("Sorry, but we have email " + email);
+
+            System.out.println(CONTROLLER_EXCEPTION_LOG + "updateEmailById: EmailExists");
+
+            return exception;
+        }
+
+        return adminUserService.updateEmailById(email, id);
+    }
+
+    @PostMapping("/updateNameById/{id}/{name}")
+    public Object updateNameById(@PathVariable(name = "id") Long id,
+                                 @PathVariable(name = "name") String name) {
+        System.out.println(CONTROLLER_LOG + "updateNameById");
+
+        return adminUserService.updateNameById(name, id);
     }
 
 }

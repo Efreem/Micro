@@ -55,20 +55,33 @@ public class UserServiceImplementation implements AdminUserService, DefaultUserS
     }
 
     @Override
-    public void updateNameById(String name, Long id) {
+    public Object updateNameById(String name, Long id) {
+        ActionDto action = new ActionDto();
+
         userRepository.updateNameById(name, id);
 
         System.out.println(LOG_PATTERN + "updateNameById");
+
+        action.setMethod("updateNameById");
+        action.setDescription("Successfully completed");
+
+        return action;
     }
 
     @Override
-    public void updateEmailById(String email, Long id) {
+    public Object updateEmailById(String email, Long id) {
+        ActionDto action = new ActionDto();
 
         if (isCorrectEmail(email) || !isEmailExists(email)) {
             userRepository.updateEmailById(email, id);
         }
 
         System.out.println(LOG_PATTERN + "updateEmailById");
+
+        action.setMethod("updateEmailById");
+        action.setDescription("Successfully completed");
+
+        return action;
     }
 
     @Override

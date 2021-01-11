@@ -54,4 +54,8 @@ public class User extends BaseEntity {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+    public boolean equalsByNameAndId(User user) {
+        return this.id.equals(user.getId()) && this.name.equals(user.getName());
+    }
 }

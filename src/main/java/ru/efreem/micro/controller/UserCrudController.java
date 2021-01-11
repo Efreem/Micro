@@ -155,7 +155,7 @@ public class UserCrudController {
         return users;
     }
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public Object saveUser(String name, String email, String phoneValue, BigDecimal cash, Byte age) {
         return adminUserService.saveUser(name, email, phoneValue, cash, age);
     }

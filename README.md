@@ -5,4 +5,5 @@
 <h3>Стэк технологий</h3>
 —Spring Boot(MVC, Data JPA, Security);<br>
 —REST;<br>
+—Swagger2;<br>
 —JWT;
